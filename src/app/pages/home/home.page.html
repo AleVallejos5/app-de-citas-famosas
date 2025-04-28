@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Citas
+    </ion-title>
+    <ion-buttons slot="end">  <!-- icono que lleva a pag de configuracion -->
+     
+      <ion-button [routerLink]="['/configuracion']" > 
+        <ion-icon name="build-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true"> 
+
+  <div class="centered-container">
+    <ion-card max-width="250px" style="max-width: 250px;" style="margin: 26px;">  <ion-card-header>
+        <ion-card-title>El éxito consiste en obtener lo que se 
+          desea. La felicidad en disfrutar lo que se 
+          obtiene.</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="text-align: right;">Ralph Waldo Emmerson</p>  </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- boton que lleva a pag de gestion -->
+  <ion-button [routerLink]="['/gestion']">+</ion-button>
+ 
+</ion-content>

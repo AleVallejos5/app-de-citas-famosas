@@ -1,0 +1,47 @@
+<div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title> Crea una nueva cita </ion-card-title>
+    </ion-card-header>
+    <form>
+      <ion-item>
+        <ion-input name="texto" 
+                  label="Texto" 
+                  [(ngModel)]="textoStr"
+                  required="required"
+                  minlength="5" 
+                  #textoInput="ngModel"
+                  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input name="autor" 
+                  label="Autor" 
+                  placeholder="Mahatma Gandhi" 
+                  [(ngModel)]="autorStr"
+                  required="required"
+                  minlength="2" 
+                  #autorInput="ngModel"
+                  ></ion-input>
+      </ion-item>
+      <ion-button 
+        type="submit" 
+        fill="clear" 
+        (click)="onClick()" 
+        [disabled]="!textoInput.valid && !autorInput.valid">
+        Agregar +</ion-button>
+    </form>
+    
+    </ion-card>
+    
+    <!-- Mensajes de las validaciones -->
+    <ion-note color="danger" 
+              class="ion-margin-horizontal"
+              [hidden]="textoInput.valid || textoInput.pristine">
+              El texto debe tener más de 5 caracteres
+    </ion-note>
+    <ion-note color="danger" 
+              class="ion-margin-horizontal"
+              [hidden]="autorInput.valid || autorInput.pristine">
+              El nombre del autor debe tener más de 2 caracteres
+    </ion-note>
+</div>

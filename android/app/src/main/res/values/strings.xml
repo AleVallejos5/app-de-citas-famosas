@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">app-de-citas-famosas</string>
+    <string name="title_activity_main">app-de-citas-famosas</string>
+    <string name="package_name">app.de.citas.famosas</string>
+    <string name="custom_url_scheme">app.de.citas.famosas</string>
+</resources>
