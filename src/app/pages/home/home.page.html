@@ -3,10 +3,9 @@
     <ion-title>
       Citas
     </ion-title>
-    <ion-buttons slot="end">  <!-- icono que lleva a pag de configuracion -->
-     
-      <ion-button [routerLink]="['/configuracion']" > 
-        <ion-icon name="build-outline"></ion-icon>
+    <ion-buttons slot="end">  
+      <ion-button [routerLink]="['/configuracion']" fill="clear" > 
+        <ion-icon name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,7 +24,7 @@
     </ion-card>
   </div>
 
-  <!-- boton que lleva a pag de gestion -->
-  <ion-button [routerLink]="['/gestion']">+</ion-button>
  
+  <ion-button [routerLink]="['/gestion']">+</ion-button>
+ 
 </ion-content>

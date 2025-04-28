@@ -7,17 +7,30 @@ import { Cita } from '../modelo/cita';
 export class CitasService {
 
   private _citas: Cita[] = [
-    new Cita("", "")
+    new Cita("La vida es lo que pasa mientras diseñas otros planes", "John Lennon", 1),
+    new Cita("Sé el cambio que quieres ver en el mundo", "Mahatma Gandhi", 2)
   ]
 
   constructor() {}
 
-  getCitas(): Cita[] { 
-    return this._citas
-  } 
-  
-  agregarCita(c:Cita) { 
-    this._citas.push(c);
+  // obtener cita aleatoria
+  getRandomCita(): Cita {
+    return this._citas[Math.floor(Math.random() * this._citas.length)];
   }
 
+  // Obtener todas las citas (usado en gestión)
+  getCitas(): Cita[] { 
+    return [...this._citas]; // retorna copia para evitar mutaciones
+  } 
+  
+  // Agregar nueva cita (con ID autoincremental)
+  agregarCita(c: Cita): void { 
+    const newId = this._citas.length > 0 ? Math.max(...this._citas.map(c => c.id || 0)) + 1 : 1;
+    this._citas.push(new Cita(c.texto, c.autor, newId));
+  }
+
+  // eliminar cita por ID
+  eliminarCita(id: number): void {
+    this._citas = this._citas.filter(c => c.id !== id);
+  }
 }
