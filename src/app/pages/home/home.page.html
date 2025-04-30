@@ -4,8 +4,8 @@
       Citas
     </ion-title>
     <ion-buttons slot="end">  
-      <ion-button [routerLink]="['/configuracion']" fill="clear" > 
-        <ion-icon name="settings-outline"></ion-icon>
+      <ion-button [routerLink]="['/configuracion']"> 
+        <ion-icon name="build-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -13,17 +13,16 @@
 
 <ion-content [fullscreen]="true"> 
 
-  <div class="centered-container">
-    <ion-card max-width="250px" style="max-width: 250px;" style="margin: 26px;">
-      <ion-card-header>
-        
-      </ion-card-header>
-      <ion-card-content>
-        <p style="text-align: right;">Ralph Waldo Emmerson</p>  </ion-card-content>
-    </ion-card>
-  </div>
+  <ion-card max-width="250px" style="max-width: 250px;" style="margin: 26px;">
+    <ion-card-content>
+      <p>{{ citaAleatoria.texto }}</p>
+      <p style="text-align: right;">{{ citaAleatoria.autor }}</p>
+    </ion-card-content>
+    <ion-button *ngIf="mostrarBotonEliminar" (click)="eliminarCita()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-card>
 
- 
   <ion-button [routerLink]="['/gestion']">+</ion-button>
- 
+
 </ion-content>

@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonIcon, IonButton, IonCard, IonCardContent, IonCardTitle, IonCardHeader } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonIcon, IonButton, IonCard, IonCardContent} from '@ionic/angular/standalone';
 import { buildOutline, refreshOutline, settingsOutline, trashOutline } from 'ionicons/icons';
 import { Router, RouterModule } from '@angular/router';
 import { Cita } from 'src/app/modelo/cita';
 import { CitasService } from 'src/app/servicios/citas.service';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonCardHeader, IonCardTitle, IonCardContent, IonCard, IonButton,
+  imports: [IonCardContent, IonCard, IonButton,
      IonIcon, IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, RouterModule],
 })
 export class HomePage {
@@ -22,7 +22,9 @@ export class HomePage {
     private citasService: CitasService,
     private router: Router
   ) {
-    addIcons({ buildOutline, settingsOutline, refreshOutline, trashOutline});
+
+    addIcons({ buildOutline, settingsOutline, refreshOutline, trashOutline});
+
     this.citaAleatoria = this.citasService.getRandomCita();
   }
 

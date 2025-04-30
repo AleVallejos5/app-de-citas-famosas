@@ -13,8 +13,7 @@ import { Cita } from 'src/app/modelo/cita';
 })
 
 export class OpcionCitasComponent  implements OnInit {
-  
-  listaCitas:Cita[] = []
+  listaCitas: Cita[] = [];
 
   constructor(
     private citasService:CitasService  
@@ -29,9 +28,9 @@ export class OpcionCitasComponent  implements OnInit {
   }
     
 
-  onCreateCita($event: { texto: string; autor: string }) {
-    const cita = new Cita($event.texto, $event.autor);
-    this.citasService.agregarCita(cita);
+  onCreateCita(event: { texto: string; autor: string }) {
+    const nuevaCita = new Cita(event.texto, event.autor);
+    this.citasService.agregarCita(nuevaCita);
     this.listaCitas = this.citasService.getCitas();
     this._actualizar();
     

@@ -11,6 +11,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton,
   imports: [IonToggle, IonItem, IonList, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class ConfiguracionPage implements OnInit {
+  permiteBorrado: boolean = true;
 
   constructor() { }
 

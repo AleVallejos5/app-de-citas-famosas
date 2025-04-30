@@ -9,7 +9,7 @@ export class CitasService {
   private _citas: Cita[] = [
     new Cita("La vida es lo que pasa mientras diseñas otros planes", "John Lennon", 1),
     new Cita("Sé el cambio que quieres ver en el mundo", "Mahatma Gandhi", 2)
-  ]
+  ];
 
   constructor() {}
 
@@ -24,9 +24,9 @@ export class CitasService {
   } 
   
   // Agregar nueva cita (con ID autoincremental)
-  agregarCita(c: Cita): void { 
+  agregarCita(cita: Cita): void { 
     const newId = this._citas.length > 0 ? Math.max(...this._citas.map(c => c.id || 0)) + 1 : 1;
-    this._citas.push(new Cita(c.texto, c.autor, newId));
+    this._citas.push(new Cita(cita.texto, cita.autor, newId));
   }
 
   // eliminar cita por ID
