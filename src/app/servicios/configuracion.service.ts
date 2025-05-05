@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfiguracionService {
-  private permitirBorrarInicio = true;
+  private readonly KEY_PERMITIR_BORRADO = 'permitirBorrado';
 
-  getPermitirBorrarInicio(): boolean {
-    return this.permitirBorrarInicio;
+  async getPermitirBorrado(): Promise<boolean> {
+    const {value} = await Preferences.get({ key: this.KEY_PERMITIR_BORRADO});
+    return value === 'true';
   }
 
-  setPermitirBorrarInicio(valor: boolean): void {
-    this.permitirBorrarInicio = valor;
+  async setPermitirBorrado(permitir: boolean): Promise<void> {
+    await Preferences.set({
+      key: this.KEY_PERMITIR_BORRADO,
+      value: String(permitir)
+    });
   }
 
   constructor() { }

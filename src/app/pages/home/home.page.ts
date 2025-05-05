@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonIcon, IonButton, IonCard, IonCardContent} from '@ionic/angular/standalone';
 import { buildOutline, refreshOutline, settingsOutline, trashOutline } from 'ionicons/icons';
 import { Router, RouterModule } from '@angular/router';
 import { Cita } from 'src/app/modelo/cita';
 import { CitasService } from 'src/app/servicios/citas.service';
 import { addIcons } from 'ionicons';
+import { ConfiguracionService } from 'src/app/servicios/configuracion.service';
 
 @Component({
   selector: 'app-home',
@@ -14,40 +15,36 @@ import { addIcons } from 'ionicons';
   imports: [IonCardContent, IonCard, IonButton,
      IonIcon, IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, RouterModule],
 })
-export class HomePage {
-  citaAleatoria: Cita;
+export class HomePage implements OnInit {
+  citaAleatoria: Cita | null = null;
   mostrarBotonEliminar: boolean = true; // controlar la visivilidad del boton
 
   constructor(
     private citasService: CitasService,
-    private router: Router
+    private router: Router,
+    private configService: ConfiguracionService
   ) {
 
     addIcons({ buildOutline, settingsOutline, refreshOutline, trashOutline});
-
-    this.citaAleatoria = this.citasService.getRandomCita();
   }
 
-  // actualizar la cita aleatoria
-  refrescarCita() {
-    this.citaAleatoria = this.citasService.getRandomCita();
+  async ngOnInit() {
+    await this.cargarConfiguracion();
+    await this.cargarCitaAleatoria();
   }
 
-  // elimibnar la cita actual
-  eliminarCita() {
-    if (this.citaAleatoria.id){
-      this.citasService.eliminarCita(this.citaAleatoria.id);
-      this.refrescarCita();
+  private async cargarConfiguracion() {
+    this.mostrarBotonEliminar = await this.configService.getPermitirBorrado();
+  }
+
+  private async cargarCitaAleatoria() {
+    this.citaAleatoria = await this.citasService.getRandomCita();
+  }
+
+  async eliminarCita() {
+    if (this.citaAleatoria?.id) {
+      await this.citasService.eliminarCita(this.citaAleatoria.id);
+      await this.cargarCitaAleatoria();
     }
   }
-
-  // navegacion
-  irAGestion() {
-    this.router.navigate(['/gestion']);
-  }
-
-  irAConfiguracion(){
-    this.router.navigate(['/configuracion']);
-  }
-
 }

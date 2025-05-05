@@ -1,4 +1,14 @@
-<div>
+<ion-content>
+  <!-- Formulario -->
   <app-cita-form (onCreate)="onCreateCita($event)"></app-cita-form>
-  <app-cita-list [citas]="listaCitas"></app-cita-list>  
-</div>
+
+  <!-- Lista con spinner -->
+   @if (cargando) {
+    <ion-spinner name="crescnt"></ion-spinner>
+   } @else {
+     <app-cita-list 
+     [citas]="listaCitas" 
+     (onDelete)="onDeleteCita($event)">
+    </app-cita-list>
+   }
+</ion-content>

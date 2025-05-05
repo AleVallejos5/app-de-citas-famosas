@@ -1,36 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Cita } from '../modelo/cita';
+import { SQLiteService } from './sqlite.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitasService {
+  private dbReady: Promise<void>;
 
-  private _citas: Cita[] = [
-    new Cita("La vida es lo que pasa mientras diseñas otros planes", "John Lennon", 1),
-    new Cita("Sé el cambio que quieres ver en el mundo", "Mahatma Gandhi", 2)
-  ];
-
-  constructor() {}
-
-  // obtener cita aleatoria
-  getRandomCita(): Cita {
-    return this._citas[Math.floor(Math.random() * this._citas.length)];
+  constructor(private sqlite: SQLiteService) {
+    this.dbReady = this.inicializarDB();
   }
 
-  // Obtener todas las citas (usado en gestión)
-  getCitas(): Cita[] { 
-    return [...this._citas]; // retorna copia para evitar mutaciones
-  } 
-  
-  // Agregar nueva cita (con ID autoincremental)
-  agregarCita(cita: Cita): void { 
-    const newId = this._citas.length > 0 ? Math.max(...this._citas.map(c => c.id || 0)) + 1 : 1;
-    this._citas.push(new Cita(cita.texto, cita.autor, newId));
+  private async inicializarDB(): Promise<void> {
+    await this.sqlite.crearDB();
+    await this.sqlite.ejecutarSQL(`
+      CREATE TABLE IF NOT EXISTS citas (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      texto TEXT NOT NULL,
+      autor TEXT NOT NULL
+      );
+    `);
   }
 
-  // eliminar cita por ID
-  eliminarCita(id: number): void {
-    this._citas = this._citas.filter(c => c.id !== id);
+  async getCitas(): Promise<Cita[]> {
+    await this.dbReady;
+    const result = await this.sqlite.ejecutarSQL('SELECT * FROM citas');
+    return result?.values?.map((c: any) => new Cita(c.texto, c.autor, c.id)) || [];
   }
+
+  async agregarCita(cita: Cita): Promise<void> {
+    await this.sqlite.ejecutarSQL(
+      'INSERT INTO citas (texto, autor) VALUES (?, ?)',
+      [cita.texto, cita.autor]
+    );
+  }
+
+  async eliminarCita(id: number): Promise<void> {
+    await this.sqlite.ejecutarSQL('DELETE FROM citas WHERE id = ?', [id]);
+  }
+
+  async getRandomCita(): Promise<Cita | null> {
+    const citas = await this.getCitas();
+    return citas.length > 0 ? citas[Math.floor(Math.random() * citas.length)] : null;
+  }
+
 }
