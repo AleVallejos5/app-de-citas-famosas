@@ -11,18 +11,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> 
-
-  <ion-card max-width="250px" style="max-width: 250px;" style="margin: 26px;">
+<ion-content class="ion-padding"> 
+  <ion-card class="quote-card">
     <ion-card-content>
-      <p>{{ citaAleatoria?.texto }}</p>
-      <p style="text-align: right;">{{ citaAleatoria?.autor }}</p>
+      <p class="quote-text">{{ citaAleatoria?.texto || "No ahi citas disponibles" }}</p>
+      <p class="quote-author">{{ citaAleatoria?.autor || "Agregar citas con el icono +" }}</p>
     </ion-card-content>
-    <ion-button *ngIf="mostrarBotonEliminar" (click)="eliminarCita()">
+    <ion-button *ngIf="mostrarBotonEliminar" fill="clear" color="danger" (click)="eliminarCita()">
       <ion-icon name="trash-outline"></ion-icon>
     </ion-button>
   </ion-card>
 
-  <ion-button [routerLink]="['/gestion']">+</ion-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/gestion']" color="primary">
+      <ion-icon name="add">+</ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
